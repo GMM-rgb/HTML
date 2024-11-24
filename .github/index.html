@@ -1,12 +1,1359 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+        }
+        
+        canvas[id="Drop_Out_Frame"] {
+            position: fixed;
+            top: 0vh;
+            left: 0vh;
+            border: 3px solid black;
+            border-radius: 20px;
+            background-color: lightcyan;
+            display: none; /* Hide canvas by default */
+            visibility: hidden; /* Hide canvas by default */
+            z-index: 10; /* Stay on top */
+            opacity: 0.75;
+            container-type: display;
+            display: contain id="Frame1";
+        }
+        
+        canvas[id="Frame1"] {
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: #7ae7fa;
+            position: fixed;
+            left: 1vh;
+            width: 300px;
+            height: 50px;
+            display: none; /* Hide by default */
+            visibility: hidden; /* Hide by default */
+            z-index: 20; /* Ensure it stays on top of everything */
+            transition-behavior: script;
+            transition: top 0.35s ease-out, background-color 0.4s ease-in-out;
+        }
+        
+        canvas[id="Frame2"] {
+          border: 2px solid black;
+          border-radius: 10px;
+          background-color: #7ae7fa;
+          position: fixed;
+          top: 17.75vh;
+          left: 1vh;
+          width: 300px;
+          height: 50px;
+          display: none;
+          visibility: hidden;
+          z-index: 20;
+          transition-behavior: script;
+          transition: top 0.35s ease-out, background-color 0.4s ease-in-out;
+        }
+        
+        canvas[id="Divider_1"] {
+          border: 2px solid black;
+          border-radius: 5px;
+          background-color: #007876;
+          position: fixed;
+          top: 27.5vh;
+          left: 0.45vw;
+          width: 300px;
+          height: 10px;
+          display: none;
+          visibility: hidden;
+          margin-left: auto;
+          margin-top: -1px auto;
+          margin-bottom: auto;
+          justify-content: center;
+          align-content: center;
+          z-index: 60;
+          transition-behavior: script;
+          transition: top 0.4s ease, background-color 0.4s ease-in-out;
+        }
+        
+        canvas[id="Divider_1"]:hover {
+          cursor: default;
+          background-color: #0793a8;
+        }
+        
+        canvas[id="Frame3"] {
+          border: 2px solid black;
+          border-radius: 10px;
+          background-color: #7ae7fa;
+          position: fixed;
+          top: 27.5vh;
+          left: 1vh;
+          width: 300px;
+          height: 50px;
+          display: none;
+          visibility: hidden;
+          z-index: 20;
+          transition-behavior: script;
+          transition: top 0.35s ease-out, background-color 0.4s ease-in-out;
+        }
+        
+        canvas[id="Drop_Out_Frame_Icon_Extension"] {
+            display: none; /* Hide canvas by default */
+            visibility: hidden; /* Hide canvas by default */
+            opacity: 0.785; /* Default Extension Opacity */
+            position: relative, fixed;
+            background-color: orange;
+            border: 2px solid black;
+            border-radius: 30px;
+            position: absolute;
+            left: 1vh;
+            top: 1vh;
+            width: 300px;
+            height: 75px;
+            z-index: 60; /* Ensure it stays on top */
+            transition-behavior: script;
+            transition: all 0.35s ease-in-out;
+        }
+        
+        img[id="dropout_Menu_Icon"] {
+            position: fixed;
+            top: 1vh;
+            left: 1vh;
+            width: 45px;
+            height: 45px;
+            border: none;
+            border-radius: 8.5px;
+            background-color: lightgray;
+            background: rgba(255,255,255,0.4);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            transition: all 0.35s ease-in-out, border-radius 0.6s ease-in-out;
+            z-index: 60; /* Ensure it stays on top */
+        }
+
+        img[id="dropout_Menu_Icon"]:hover {
+            cursor: pointer;
+            width: 75px;
+            height: 75px;
+            border: 2px solid black;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+            background-color: lightgray;
+        }
+
+        /* Text label default styles */
+        text1[id="ExtensionText1"] {
+          position: fixed;
+          display: none;
+          margin: auto;
+          padding: 2px auto;
+          font-weight: bold;
+          font-size: 1.5em;
+          font-family: Comic Sans MS;
+          cursor: default;
+          visibility: hidden;
+          z-index: 60;
+        }
+        
+        text2[id="SearchPage_Label"] {
+          position: fixed;
+          display: none;
+          visibility: hidden;
+          margin: 0px auto;
+          align-content: center auto;
+          top: 9.5vh;
+          left: 19.5vh;
+          border: 4px solid #0aaac2;
+          border-radius: 10px;
+          width: 115px;
+          height: 30px;
+          font-weight: bold;
+          font-size: 1.25em;
+          font-family: Comic Sans MS;
+          z-index: 50;
+          transition: top 0.35s ease-out;
+          /* Sets the label to be unselectable */
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        
+        text2[id="SearchPage_Label"]:hover {
+          cursor: default;
+        }
+        
+        text3[id="Settings_Label"] {
+          position: fixed;
+          display: none;
+          visibility: hidden;
+          top: 19vh;
+          left: 19.5vh;
+          border: 4px solid #0aaac2;
+          border-radius: 10px;
+          width: 115px;
+          height: 30px;
+          font-weight: bold;
+          font-size: 1.25em;
+          font-family: Comic Sans MS;
+          z-index: 50;
+          transition: top 0.35s ease-out;
+          /* Sets the label to be unselectable */
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        
+        text3[id="Settings_Label"]:hover {
+          cursor: default;
+        }
+        
+        text4[id="Game_1_Label"] {
+          position: fixed;
+          display: none;
+          visibility: hidden;
+          top: 28.75vh;
+          left: 19.5vh;
+          border: 4px solid #0aaac2;
+          border-radius: 10px;
+          width: 115px;
+          height: 30px;
+          font-weight: bold;
+          font-size: 1.25em;
+          font-family: Comic Sans MS;
+          z-index: 50;
+          transition: top 0.35s ease-out;
+          /* Sets the label to be unselectable */
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        
+        text4[id="Game_1_Label"]:hover {
+          cursor: default;
+        }
+        /* Sets the Button icon to do its transitions, and appears the extension when cursor is hovered over the button */
+        img[id="dropout_Menu_Icon"]:hover + canvas[id="Drop_Out_Frame_Icon_Extension"] + text1[id="ExtensionText1"] {
+            display: block; /* Show canvas when button is hovered */
+            visibility: visible;
+        }
+        /* Button Frame Background color change on cursor hover */
+        canvas[id="Frame1"]:hover {
+            cursor: default;
+            background-color: #42e0fc;
+            container: link id="Drop_Out_Frame"
+        }
+        
+        canvas[id="Frame2"]:hover {
+          cursor: default;
+          background-color: #42e0fc;
+        }
+        
+        canvas[id="Frame3"]:hover {
+          cursor: default;
+          background-color: #42e0fc;
+        }
+        
+        form[action="page2.html"] {
+            position: relative;
+        }
+        
+        form[action="page2.html"] button {
+            position: absolute;
+            top: 0vh;
+            left: 0vw;
+            width: 100%;
+            height: 100%;
+            opacity: transparent;
+            border: none;
+            outline: none;
+            cursor: default;
+            z-index: -1;
+        }
+        
+        form[action="page2.html"] canvas[id="Frame1"] {
+            position: relative;
+            z-index: 1;
+        }
+        
+        button[id="SearchButton_DropDownMenuVersion"] {
+          display: none;
+          visibility: hidden;
+          position: fixed;
+          background-color: #19e0ff;
+          top: 9.25vh;
+          left: 2.25vh;
+          width: 100px;
+          height: 40px;
+          border: 0.35vh solid black;
+          border-radius: 10px;
+          font-family: Comic Sans MS;
+          font-weight: bold;
+          font-size: 1.25em;
+          padding: 5px;
+          z-index: 50; /* Sets the button to be on top of the Frame & everything else */
+          transition: background-color 0.45s ease-in-out, top 0.35s ease-out;
+        }
+        
+        button[id="SearchButton_DropDownMenuVersion"]:hover {
+          cursor: pointer;
+          position: fixed;
+          background-color: #06adc7;
+          z-index: 50;
+        }
+        
+        button[id="Settings_Menu_Button"] {
+          display: none;
+          visibility: hidden;
+          position: fixed;
+          background-color: #19e0ff;
+          top: 19vh;
+          left: 2.25vh;
+          width: 100px;
+          height: 40px;
+          border: 0.35vh solid black;
+          border-radius: 10px;
+          font-family: Comic Sans MS;
+          font-weight: bold;
+          font-size: 1.25em;
+          padding: 5px;
+          z-index: 50;
+          transition: background-color 0.45s ease-in-out, top 0.35s ease-out;
+        }
+        
+        button[id="Settings_Menu_Button"]:hover {
+          cursor: pointer;
+          position: fixed;
+          background-color: #06adc7;
+          z-index: 50;
+        }
+        
+        button[id="Game1ButtonGoTo"] {
+          display: none;
+          visibility: hidden;
+          position: fixed;
+          background-color: #19e0ff;
+          top: 28.75vh;
+          left: 2.25vh;
+          width: 100px;
+          height: 40px;
+          border: 0.35vh solid black;
+          border-radius: 10px;
+          font-family: Comic Sans MS;
+          font-weight: bold;
+          font-size: 1.25em;
+          padding: 5px;
+          z-index: 50;
+          transition: background-color 0.45s ease-in-out, top 0.35s ease-out;
+        }
+        
+        button[id="Game1ButtonGoTo"]:hover {
+          cursor: pointer;
+          position: fixed;
+          background-color: #06adc7;
+          z-index: 50;
+        }
+     </style>
+  </head>
+<!--Object and layout Creation & Setup-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <body>
+    <canvas id="Drop_Out_Frame" width="312.5" height="580"></canvas>
+      <canvas id="Frame1"></canvas>
+        <canvas id="Frame2"></canvas>
+            <canvas id="Divider_1"></canvas>
+          <canvas id="Frame3"></canvas>
+      <div>
+        <canvas id="Drop_Out_Frame_Icon_Extension" width="200" height="85"></canvas>
+        <text1 id="ExtensionText1">Click to Expand</text1>
+      </div>
+    <img id="dropout_Menu_Icon" src="https://assets.onecompiler.app/42w3zjd8h/42y25fzet/Hamburger_icon_Button.png" alt="Image_Assets/Hamburger_icon_Button.png" width="32.5" height="32.5">
+    
+    <form action="page2.html" method="get">
+        <button type="submit"></button>
+    </form>
+
+    <form action="search_index.html" method="get">
+      <button type="submit" id="SearchButton_DropDownMenuVersion">Load</button>
+      <text2 id="SearchPage_Label">Searcher🔍</text2>
+    </form>
+
+    <form action="SettingsPage.html" method="get">
+      <button type="submit" id="Settings_Menu_Button">Load</button>
+      <text3 id="Settings_Label">Settings⚙</text3>
+    </form>
+          <!--If downloaded == Allow (('==' **is equal**))-->
+    <form action="Water_Bottle_Clicking_Simulator/Water_Bottle_Clicking_Simulator.html" method="get">
+      <button type="submit" id="Game1ButtonGoTo">Load</button>
+      <text4 id="Game_1_Label">Game 💾</text4>
+    </form>
+  <body>
+    <script>
+        // Show the menu from Button & Info tag
+        document.getElementById('dropout_Menu_Icon').addEventListener('click', function() {
+          var dropOutFrame = document.getElementById('Drop_Out_Frame');
+          var frame1 = document.getElementById('Frame1');
+          var searchButtonDropDownVer = document.getElementById('SearchButton_DropDownMenuVersion');
+          var searchPageLabel = document.getElementById('SearchPage_Label');
+          var settingsButton = document.getElementById('Frame2');
+          var settingsButtonGoTo = document.getElementById('Settings_Menu_Button');
+          var settingTextLabel = document.getElementById('Settings_Label');
+          var game1Button = document.getElementById('Frame3');
+          var game1Label = document.getElementById('Game_1_Label');
+          var game1ButtonGoTo = document.getElementById('Game1ButtonGoTo');
+          var dividerLine1 = document.getElementById('Divider_1');
+          var dropoutMenuIcon = document.getElementById('dropout_Menu_Icon');
+            
+            if (dropOutFrame.style.display === 'none' || dropOutFrame.style.visibility === 'hidden' || dropOutFrame.style.display === '') {
+                dropOutFrame.style.display = 'block';
+                dropOutFrame.style.visibility = 'visible';
+                dropOutFrame.style.contain = 'frame1'
+                // Search Button Drop down Menu version on click function
+                frame1.style.display === 'none' || frame1.style.visibility === 'visible' || frame1.style.display ==='block';
+                frame1.style.display = 'block';
+                frame1.style.visibility = 'visible';
+                // Search Text label function on click
+                searchButtonDropDownVer.style.display === 'none' || searchButtonDropDownVer.style.visibility === 'visible' || searchButtonDropDownVer.style.display === 'block';
+                searchButtonDropDownVer.style.display = 'block';
+                searchButtonDropDownVer.style.visibility = 'visible';
+                searchButtonDropDownVer.style.position = 'fixed';
+                // Search Label show on click function
+                searchPageLabel.style.display === 'none' || searchPageLabel.style.visibility === 'visible' || searchPageLabel.style.display ==='block';
+                searchPageLabel.style.display = 'block';
+                searchPageLabel.style.visibility = 'visible';
+                // Settings Button show on click function
+                settingsButton.style.display === 'none' || settingsButton.style.visibility === 'hidden' || settingsButton.style.display === 'block';
+                settingsButton.style.display = 'block';
+                settingsButton.style.visibility = 'visible';
+                // 
+                settingsButtonGoTo.style.display === 'none' || settingsButtonGoTo.style.visibility ==='hidden' || settingsButtonGoTo.style.display === 'block';
+                settingsButtonGoTo.style.display = 'block';
+                settingsButtonGoTo.style.visibility = 'visible'
+                // 
+                settingTextLabel.style.display === 'none' || settingTextLabel.style.visibility === 'hidden' || settingTextLabel.style.display === 'block';
+                settingTextLabel.style.display = 'block';
+                settingTextLabel.style.visibility = 'visible';
+                // 
+                game1Button.style.display === 'none' || game1Button.style.visibility === 'hidden' || game1Button.style.display === 'block';
+                game1Button.style.display = 'block';
+                game1Button.style.visibility = 'visible';
+                // 
+                game1Label.style.display === 'none' || game1Label.style.visibility === 'hidden' || game1Label.style.display === 'block';
+                game1Label.style.display = 'block';
+                game1Label.style.visibility = 'visible';
+                // 
+                game1ButtonGoTo.style.display === 'none' || game1ButtonGoTo.style.visibility === 'hidden' || game1ButtonGoTo.style.display === 'block';
+                game1ButtonGoTo.style.display = 'block';
+                game1ButtonGoTo.style.visibility = 'visible';
+                // Divider 1 appear on button click
+                dividerLine1.style.display === 'none' || dividerLine1.style.visibility === 'hidden' || dividerLine1.style.display === 'block';
+                dividerLine1.style.display = 'block';
+                dividerLine1.style.visibility = 'visible';
+                
+            } else {
+                // Main drop out frame for menu, hide on function
+                dropOutFrame.style.display = 'block';
+                dropOutFrame.style.visibility = 'hidden';
+                // Search button drop down version frame, hide on function
+                frame1.style.display = 'none';
+                frame1.style.visibility = 'hidden';
+                // Search Button hide on click function
+                searchButtonDropDownVer.style.display ='none';
+                searchButtonDropDownVer.style.visibility = 'hidden';
+                // Search Label hide on click function
+                searchPageLabel.style.display = 'none';
+                searchPageLabel.style.visibility = 'hidden';
+                // Settings Button hide on click function
+                settingsButton.style.display = 'none';
+                settingsButton.style.visibility = 'hidden';
+                // 
+                settingsButtonGoTo.style.display = 'none';
+                settingsButtonGoTo.style.visibility = 'hidden';
+                // 
+                settingTextLabel.style.display = 'none';
+                settingTextLabel.style.visibility = 'hidden';
+                // 
+                game1Button.style.display = 'none';
+                game1Button.style.visibility = 'hidden';
+                // 
+                game1Label.style.display = 'none';
+                game1Label.style.visibility = 'hidden';
+                // 
+                game1ButtonGoTo.style.display = 'none';
+                game1ButtonGoTo.style.visibility = 'hidden';
+                // Diver Line 1  hide on click function
+                dividerLine1.display = 'none';
+                dividerLine1.style.visibility = 'hidden';
+                
+            }
+        });
+        
+        // Drop out Frame iconExtension Function to make visible or dissapear
+        document.getElementById('dropout_Menu_Icon').addEventListener('mouseover', function() {
+            var iconExtension = document.getElementById('Drop_Out_Frame_Icon_Extension');
+            iconExtension.style.display = 'block';
+            iconExtension.style.visibility = 'visible';
+            iconExtension.style.position = 'fixed';
+        });
+        
+        document.getElementById('dropout_Menu_Icon').addEventListener('mouseout', function() {
+            var iconExtension = document.getElementById('Drop_Out_Frame_Icon_Extension');
+            iconExtension.style.display = 'none';
+            iconExtension.style.visibility = 'hidden';
+        });
+        
+      // (Unused!)
+        // Both way Function for icon button and extension to keep display wether both are hovered on
+        //document.getElementById('Drop_Out_Frame_Icon_Extension').addEventListener('mouseover', function() {
+        //  var iconExtension = document.getElementById('Drop_Out_Frame_Icon_Extension');
+        //  var iconButton = document.getElementById('dropout_Menu_Icon');
+          // Extension
+        //    iconExtension.style.display = 'block';
+        //    iconExtension.style.visibility = 'visible';
+        //    iconExtension.style.position = 'fixed';
+          // Icon Button
+        //    iconButton.style.borderBottomLeftRadius = '30px';
+        //    iconButton.style.borderBottomRightRadius = '3px';
+        //    iconButton.style.borderTopRightRadius = '3px';
+        //    iconButton.style.borderTopLeftRadius = '30px';
+          // Icon Button Size Adjustment
+        //    iconButton.style.width = '75px';
+        //    iconButton.style.height = '75px';
+
+      //  });
+
+      //  document.getElementById('Drop_Out_Frame_Icon_Extension').addEventListener('mouseout', function() {
+      //    var iconExtension = document.getElementById('Drop_Out_Frame_Icon_Extension');
+      //    var iconButton = document.getElementById('dropout_Menu_Icon');
+          // Extension
+      //      iconExtension.style.display = 'block';
+      //      iconExtension.style.visibility = 'hidden';
+      //      iconExtension.style.position = 'fixed';
+          // Icon Button
+      //      iconButton.style.borderRadius = '8.5px';
+      //      iconButton.style.width = '45px';
+      //      iconButton.style.height = '45px';
+
+      //  });
+    </script>
+    <!--Java Script for the Text box in drop down button extension-->
+      <script>
+          document.getElementById('dropout_Menu_Icon').addEventListener('mouseover', function() {
+          var extensionText1 = document.getElementById('ExtensionText1');
+          extensionText1.style.display = 'block';
+          extensionText1.style.visibility = 'visible';
+          extensionText1.style.left = '16.5vh';
+          extensionText1.style.top ='5.45vh';
+          extensionText1.style.cursor ='pointer';
+        });
+        
+        document.getElementById('dropout_Menu_Icon').addEventListener('mouseout', function() {
+          var extensionText1 = document.getElementById('ExtensionText1');
+          extensionText1.style.display = 'none';
+          extensionText1.style.visibility = 'hidden';
+          extensionText1.style.left ='13.5vh';
+          extensionText1.style.top ='4.25vh';
+          extensionText1.style.cursor ='defualt';
+        });
+      </script>
+      <!--Java Script for the Search Button in Drop Down Menu-->
+      <script>
+      // Sets top position for overflow when info tag is triggered
+        document.getElementById('dropout_Menu_Icon').addEventListener('mouseover', function() {
+          var dropframeExtension = document.getElementById('Frame1');
+          var searchButtonDropDownVer = document.getElementById('SearchButton_DropDownMenuVersion');
+          var searchPageLabel = document.getElementById('SearchPage_Label');
+          var settingsButton = document.getElementById('Frame2');
+          var settingsButtonGoTo = document.getElementById('Settings_Menu_Button');
+          var settingTextLabel = document.getElementById('Settings_Label');
+          var dividerLine1 = document.getElementById('Divider_1');
+          var game1Button = document.getElementById('Frame3');
+          var game1Label = document.getElementById('Game_1_Label');
+          var game1ButtonGoTo = document.getElementById('Game1ButtonGoTo');
+          
+          // Extension Frame
+          dropframeExtension.style.top = '16vh';
+          // Search Button Row
+          searchButtonDropDownVer.style.top = '17.25vh';
+          searchPageLabel.style.top = '17.5vh';
+          // Setting Button Row
+          settingsButton.style.top = '25.75vh';
+          settingsButtonGoTo.style.top = '27vh';
+          settingTextLabel.style.top = '27.25vh';
+          // Divider line 1 self Row
+          dividerLine1.style.top = '35.25vh';
+          // Game Button Row
+          game1Button.style.top = '38.5vh';
+          game1Label.style.top = '39.75vh';
+          game1ButtonGoTo.style.top ='39.75vh';
+          
+        });
+        // Returns objects back to orginal positions
+        document.getElementById('dropout_Menu_Icon').addEventListener('mouseout', function() {
+          var dropframeExtension = document.getElementById('Frame1');
+          var searchButtonDropDownVer = document.getElementById('SearchButton_DropDownMenuVersion');
+          var searchPageLabel = document.getElementById('SearchPage_Label');
+          var settingsButton = document.getElementById('Frame2');
+          var settingsButtonGoTo = document.getElementById('Settings_Menu_Button');
+          var settingTextLabel = document.getElementById('Settings_Label');
+          var dividerLine1 = document.getElementById('Divider_1');
+          var game1Button = document.getElementById('Frame3');
+          var game1Label = document.getElementById('Game_1_Label');
+          var game1ButtonGoTo = document.getElementById('Game1ButtonGoTo');
+          // Extension Frame    
+          dropframeExtension.style.top ='8vh';
+          // Search Button Row
+          searchButtonDropDownVer.style.top ='9.25vh';
+          searchPageLabel.style.top ='9.5vh';
+          // Settings Button Row
+          settingsButton.style.top = '17.75vh';
+          settingsButtonGoTo.style.top = '19vh';
+          settingTextLabel.style.top = '19.25vh';
+          // Divider line 1 seppration(self) Row
+          dividerLine1.style.top = '27.25vh';
+          // Game Button Row
+          game1Button.style.top = '30.5vh';
+          game1Label.style.top = '32vh';
+          game1ButtonGoTo.style.top = '31.75vh';
+
+        });
+      </script>
+    </body>
+  </body>  
+</html>
+<!--Main Homepage Components-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+        .top-right {
+            position: absolute;
+            top: 10px;
+            right: 420px;
+            text-align: right;
+        }
+    </style>
+  </head>
+<body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            height: 100vh;
+        }
+
+        .top-right {
+            margin: 10px;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="search"], button {
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 1.250em;
+        }
+        
+    </style>
+</head>
+  <body>
+    <div class="top-right">
+        <form action="search_index.html" method="get">
+          <button type="submit" id="submitButton">Search</button>
+        </form>
+    </div>
+    <body>
+      <style>
+        button[id="submitButton"] {
+          display: flex;
+          position: absolute;
+          margin-top: -20px;
+          top: 0px;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        
+        button[id="submitButton"] {
+          padding-left: 21.5px;
+          padding-right: 30px;
+          padding-top: 2.5px;
+          padding-bottom: 2.5px;
+        }
+        
+        button[id="submitButton"] {
+          display: flex;
+          border-left: 2.5px solid gray;
+          border-right: 2.5px solid black;
+          border-top: 2.5px solid gray;
+          border-bottom: 2.5px solid black;
+          background-color: #fc9c00;
+          z-index: 5;
+          transition: background-color 0.4s ease-in-out, border-left 1s ease-in-out, border-right 1s ease-in-out, border-top 1s ease-in-out, border-bottom 1s ease-in-out, padding-left 0.8s ease-in-out, padding-right 0.8s ease-in-out, padding-top 0.8s ease-in-out, padding-bottom 0.8s ease-in-out;
+        }
+        
+        button[id="submitButton"]:hover {
+          display: flex;
+          position: fixed;
+          top: 18.5px;
+          cursor: pointer;
+          padding-left: 20px;
+          padding-right: 20px;
+          font-family: Arial;
+          font-weight: bold;
+          padding-top: 25px;
+          padding-bottom: 8.5px;
+          border-left: 5px solid cyan;
+          border-right: 5px solid darkcyan;
+          border-top: 5px solid cyan;
+          border-bottom: 5px solid darkcyan;
+          background-color: #fadcac;
+          color: black, lightgray;
+          z-index: 10;
+        }
+        
+      </style>
+        </body>
+          <script src="JS_Scripts/SearchButton1.js"></script>
+  </body>
+</html>
+<!--Title & and continued HTML components-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS_Files/TitleFont.css" />
+      <style>
+        .title {
+            display: flex;
+            position: absolute;
+            margin: 0vh;
+            top: 7.5vh;
+            left: 19.55vw;
+            justify-content: center;
+            content: block='device-width';
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 40px;
+        }
+        .title:hover {
+          cursor: context-menu;
+        }
+
+        body {
+            margin: 0; /* Remove default margin to align content to edges */
+        }
+
+        .Home-Page-Title-Tag-Frame {
+          display: none;
+          visibility: hidden;
+          opacity: 0;
+          position: absolute;
+          border: 1px solid black;
+          border-top-left-radius: 17.5px;
+          border-top-right-radius: 4px;
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 17.5px;
+          width: 139.55px;
+          height: 25px;
+          top: 15.5vh;
+          z-index: 8;
+          background-color: lightslategrey;
+        }
+        .Home-Page-Title-Tag-Frame:hover {
+          cursor: help;
+        }
+
+        .Home-Page-Title-Tag-Text {
+          display: none;
+          visibility: hidden;
+          opacity: 0;
+          position: absolute;
+          border: none;
+          border-top-left-radius: 17.5px;
+          border-top-right-radius: 4px;
+          border-bottom-left-radius: 4px;
+          border-bottom-right-radius: 17.5px;
+          width: auto;
+          height: 18px;
+          top: 16vh;
+          left: auto;
+          margin-left: 4px;
+          z-index: 9;
+          background-color: lightgray;
+          /* Font Style Set */
+          padding: 1px;
+          font-family:sans-serif;
+          font-weight: bolder;
+          font-style: italic;
+          font-size: 1.0em;
+          color: darkcyan;
+          padding-inline: 8px;
+          /* Center & align content */
+          justify-content: space-evenly;
+          text-align: center;
+          /* Sets the text to be unselectable */
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+        .Home-Page-Title-Tag-Text:hover {
+          cursor: help;
+        }
+
+        /* Hitbox for the cursor to keep hover on */
+        .hitbox-1 {
+          display: flex;
+          position: absolute;
+          border: none;
+          background-color: lightgray;
+          margin: -45.5px auto;
+          height: 47.5px;
+          width: 165px;
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          opacity: 0.01;
+        }
+        .hitbox-1:hover {
+          cursor: help;
+        }
+    </style>
+</head>
+  <body>
+    <h1 class="title" id="Home-Page-Title">Welcome to the Homepage!</h1>
+      <div>
+        <canvas class="Home-Page-Title-Tag-Frame" id="Home-Page-Title-Tag-Frame"></canvas>
+        <canvas class="hitbox-1" id="hitbox-1"></canvas>
+        <text class="Home-Page-Title-Tag-Text" id="Home-Page-Title-Tag-Text">The Main Page!</text>
+      </div>
+    <script>
+      // Create a wait function (Broken, needs fixing)
+      function wait(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      async function changeStyleAfterWait() {
+        const homepageTitleTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+        await wait(2000);
+      }
+      // !Main Script for Title Tag!
+      // Function for displaying Homepage Title Tag when mouse is hovering over title
+      document.getElementById('Home-Page-Title').addEventListener('mouseover', function() {
+        var homepageTitleTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+          homepageTitleTagFrame.style.display = 'block';
+          homepageTitleTagFrame.style.visibility = 'visible';
+          homepageTitleTagFrame.style.opacity = '1';
+      });
+      // Function for hiding the Title Tag
+      document.getElementById('Home-Page-Title').addEventListener('mouseout', function() {
+        var homepageTitleTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+          homepageTitleTagFrame.style.display = 'none';
+          homepageTitleTagFrame.style.visibility = 'hidden';
+          homepageTitleTagFrame.style.opacity = '0';
+      });
+      // Function for displaying Homepage Title Tag Text when mouse is hovering over title
+      document.getElementById('Home-Page-Title').addEventListener('mouseover', function() {
+        var homepageTitleTagText = document.getElementById('Home-Page-Title-Tag-Text');
+          homepageTitleTagText.style.display = 'block';
+          homepageTitleTagText.style.visibility = 'visible';
+          homepageTitleTagText.style.opacity = '1';
+      });
+      // Function for hiding the Title Tag Text
+      document.getElementById('Home-Page-Title').addEventListener('mouseout', function() {
+        var homepageTitleTagText = document.getElementById('Home-Page-Title-Tag-Text');
+          homepageTitleTagText.style.display = 'none';
+          homepageTitleTagText.style.visibility = 'visible';
+          homepageTitleTagText.style.opacity = '0';
+      });
+
+      // Function to display or hide the Title Tag, from hitbox
+      // Create Function 'hitbox'
+      function hitbox() {
+        const hitbox = getElementById('hitbox-1');
+      }
+        // Function to display Title Tag & text & self when mouse hovers over hitbox
+          document.getElementById('hitbox-1').addEventListener('mouseover', function() {
+            var homepageTitleTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+            var homepageTitleTagText = document.getElementById('Home-Page-Title-Tag-Text');
+              // Frame
+              homepageTitleTagFrame.style.display = 'block';
+              homepageTitleTagFrame.style.visibility = 'visible';
+              homepageTitleTagFrame.style.opacity = '1';
+              // Text
+              homepageTitleTagText.style.display = 'block';
+              homepageTitleTagText.style.visibility = 'visible';
+              homepageTitleTagText.style.opacity = '1';
+          });
+          // Function to hide Title Tag & text & self when mouse exits the hitbox
+          document.getElementById('hitbox-1').addEventListener('mouseout', function() {
+            var homepageTitleTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+            var homepageTitleTagText = document.getElementById('Home-Page-Title-Tag-Text');
+            // Frame
+            homepageTitleTagFrame.style.display = 'none';
+            homepageTitleTagFrame.style.visibility = 'visible';
+            homepageTitleTagFrame.style.opacity = '0';
+            // Text
+            homepageTitleTagText.style.display = 'none';
+            homepageTitleTagText.style.visibility = 'hidden';
+            homepageTitleTagText.style.opacity = '0';
+          });
+      // Function to make Title Tag Frame visible when mouse cursor hovers on independent(self)
+      document.getElementById('Home-Page-Title-Tag-Frame').addEventListener('mouseover', function() {
+        var selfTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+        var selfTagText = document.getElementById('Home-Page-Title-Tag-Text');
+        // Frame
+          selfTagFrame.style.display = 'block';
+          selfTagFrame.style.visibility = 'visible';
+          selfTagFrame.style.opacity = '1';
+        // Text
+          selfTagText.style.display = 'block';
+          selfTagText.style.visibility = 'visible';
+          selfTagText.style.opacity = '1';
+      });
+    // Function to make Title Tag Frame hidden when mouse cursor hovers on independent(self)
+    document.getElementById('Home-Page-Title-Tag-Frame').addEventListener('mouseout', function() {
+      var selfTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+      var selfTagText = document.getElementById('Home-Page-Title-Tag-Text');
+      // Frame
+        selfTagFrame.style.display = 'none';
+        selfTagFrame.style.visibility = 'hidden';
+        selfTagFrame.style.opacity = '0';
+      // Text
+        selfTagText.style.display = 'none';
+        selfTagText.style.visibility = 'hidden';
+        selfTagText.style.opacity = '0';
+    });
+  document.getElementById('Home-Page-Title-Tag-Text').addEventListener('mouseover', function() {
+    var selfTagText = document.getElementById('Home-Page-Title-Tag-Text');
+    var selfTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+    // Text
+      selfTagText.style.display = 'block';
+      selfTagText.style.visibility = 'visible';
+      selfTagText.style.opacity = '1';
+    // Frame
+      selfTagFrame.style.display = 'block';
+      selfTagFrame.style.visibility = 'visible';
+      selfTagFrame.style.opacity = '1';
+  });
+  document.getElementById('Home-Page-Title-Tag-Text').addEventListener('mouseout', function() {
+    var selfTagText = document.getElementById('Home-Page-Title-Tag-Text');
+    var selfTagFrame = document.getElementById('Home-Page-Title-Tag-Frame');
+    // Text
+      selfTagText.style.display = 'none';
+      selfTagText.style.visibility = 'hidden';
+      selfTagText.style.opacity = '0';
+    // Frame
+      selfTagFrame.style.display = 'none';
+      selfTagFrame.style.visibility = 'hidden';
+      selfTagFrame.style.opacity = '0';
+  });
+    </script>
+  </body>
+</html>
+
+<html>
+      <style>
+      head {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: space-evenly;
+            height: 15vh;
+            margin: auto;
+            background-color: #1b86f7;
+            border-top: 4px solid #006963;
+            border-left: 4px solid #006963;
+            border-right: 4px solid #006963;
+            border-bottom: 2px solid #006963;
+        }
+      </style>
+    <body>
+      <head>
+        <style>
+        .Homepage-body-frame {
+            display: flex;
+            height: 150vh;
+            justify-content: center;
+            align-content: space-evenly;
+            margin: auto;
+            background-color: rgb(112, 255, 236);
+            border-top: 2px solid #006963;
+            border-left: 4px solid #006963;
+            border-right: 4px solid #006963;
+            border-bottom: 4px solid #006963;
+        }
+    </style>
+<head>
+    <style>
+        #container {
+            width: 500px;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #000;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 6.5px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 6.5px;
+        }
+        #CanvasTerminal {
+            position: absolute;
+            margin: 0;
+            top: 0vh;
+            left: 0vw;
+        }
+        /* Style for the scrollbar */
+        #scrollbar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 16px;
+            height: 100%;
+            background: #f0f0f0;
+            border-left: 2px solid #ccc;
+            border-top-left-radius: 9px;
+            border-bottom-left-radius: 9px;
+        }
+        #thumb {
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            background: #ccc;
+            border-top-left-radius: 7.5px;
+            border-bottom-left-radius: 7.5px;
+            cursor: row-resize;
+        }
+    </style>
+</head>
+<body>
+  <div>
+    <body class="Homepage-body-frame" id="Homepage-body-frame"></body>
+    <div id="container">
+      <div id="2d"></div>
+        <canvas id="CanvasTerminal" width="500" height="400"></canvas>
+        <div id="scrollbar">
+            <div id="thumb"></div>
+        </div>
+    </div>
+  </div>
+    <!-- Link to external JavaScript file -->
+    <script src="JS_Scripts/scroll1.js"></script>
+  <html>
+    <body>
+    <style>
+      .info-frame {
+        position: relative;
+        border: 2px solid black;
+        border-top-right-radius: 0.5cm;
+        border-top-left-radius: 0.2cm;
+        border-bottom-right-radius: 0.5cm;
+        border-bottom-left-radius: 0.2cm;
+        background-color: lightgray;
+        justify-content: space-evenly;
+        align-content: space-around;
+        width: 325px;
+        height: 405px;
+        top: 0vh;
+        transition: background-color 0.2s ease-in-out;
+        margin-left: 2.5px;
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+
+      .info-frame:hover {
+        cursor: alias;
+        background-color: rgb(122, 122, 122);
+      }
+    </style>
+      <div>
+        <form action="" method="get">
+          <button type="submit" class="info-frame" id="info-frame"><canvas></textarea>"></canvas></button>
+      </form>
+      </div>
+    </body>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      background-color: auqamarine;
-      margin: auto;
+      .Scroll-Frame-Body {
+        height: 50vh;
+        position: absolute;
+        background-color: darkcyan;
+      }
+    </style>
+      <body class="Scroll-Frame-Body" id="Scroll-Frame-Body"></body>
+  <!--Bottom Segment of the Homepage, creation & setup-->
+<!--Scroll Frame Layout-->
+  <head>
+        <style>
+      body {
+        justify-content: space-evenly;
+        align-content: space-evenly;
+        height: 145vh;
+        max-height: 200vh;
+        border: 1px solid black;
+      }
+      .Content-Frame-1 {
+        position: absolute;
+        top: 84.5vh;
+        bottom: 0px;
+        left: 19.55vw;
+        width: 828.5px;
+        height: 565px;
+        margin-top: 0px auto;
+        border: 3px solid black;
+        background-color: cyan;
+        border-bottom-left-radius: 1cm;
+        border-top-left-radius: 0.25cm;
+        border-bottom-right-radius: 1cm;
+        border-top-right-radius: 1cm;
+      }
+
+      .Content-Frame-2 {
+        position: absolute;
+        top: 84.5vh;
+        bottom: 0px;
+        left: 19.55vw;
+        width: 20px;
+        height: 20px;
+        border: 3px solid black;
+        border-top-left-radius: 0.25cm;
+        border-bottom-right-radius: 0.5cm;
+        background-color: aquamarine;
+        transition: background-color 0.285s ease-in-out;
+        z-index: 6;
+      }
+      .Content-Frame-2:hover {
+        /* Set Cursor and color when hover */
+        cursor: not-allowed;
+        background-color: #0aaac2;
+      }
+
+      .Header-title-1 {
+        position: absolute;
+        top: 87.5vh;
+        left: 21.55vw;
+        font-weight: bold;
+        font-style: oblique;
+        font-size: 1.5em;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .Description-text-1 {
+        position: absolute;
+        top: 93.75vh;
+        left: 21.55vw;
+        font-weight: bold;
+        font-style: oblique;
+        font-size: 1.1em;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .Description-text-2 {
+        position: absolute;
+        top: 97.75vh;
+        left: 21.55vw;
+        font-weight: bold;
+        font-style: oblique;
+        font-size: 1.1em;
+      }
+    </style>
+    <div>
+      <canvas class="Content-Frame-1" id="Content-Frame-1"></canvas>
+      <canvas class="Content-Frame-2" id="Content-Frame-2"></canvas>
+      <div>
+        <text class="Header-title-1" id="Header-title-1">Facts about this HTML & why I created it</text>
+        <text class="Description-text-1" id="Description-text-1">This project was created because I wanted people to have something to play with & play on.</text>
+        <text class="Description-text-2" id="Description-text-2">[Continued]</text>
+      </div>
+    </div>
+  </head>
+</html>
+<!--Bottom Sections-->
+<html>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" content="height=device-height, initial-scale=1.0">
+  <style>
+    .body-canvas-frame-1 {
+      position: absolute;
+      border: 4px solid black;
+      border-radius: 10px;
+      background-color: aquamarine;
+      justify-content: center;
+      top: 185vh;
+      left: 19.55vw;
+      width: 60vw;
+      height: 50vh;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      transition: opacity 0.575s ease-in;
+      shape-rendering: auto;
+    }
+
+    .body-canvas-frame-2 {
+      position: absolute;
+      border: 4px solid black;
+      border-radius: 10px;
+      background-color: aquamarine;
+      justify-content: center;
+      top: 237.5vh;
+      left: 19.55vw;
+      width: 60vw;
+      height: 50vh;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.25);
+      opacity: 0;
+      transition: opacity 0.575s ease-in;
+      shape-rendering: auto;
+    }
+
+    .Preview-iframe-1 {
+      margin: 8px;
+      background-color: cyan;
+      border: 2px solid black;
+      border-radius: 10px;
+      height: 47vh;
+      width: 35vw;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+      shape-rendering: auto;
+    }
+
+    .Preview-iframe-2 {
+      margin: 8px;
+      background-color: cyan;
+      border: 2px solid black;
+      border-radius: 10px;
+      height: 47vh;
+      width: 35vw;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+      shape-rendering: none;
+    }
+
+    /* Loads up the content (Render) */
+    .loaded { /* Sets the Content Frame(s) Visiblity */ opacity: 1; }
+
+    .Hyper-Link-to-content-1 {
+      position: absolute;
+      background-color: cyan;
+      border: 2px solid black;
+      border-radius: 30cm;
+      margin: 8px;
+      height: 64.5px;
+      width: 13.5vw;
+      z-index: 8;
+      transition: background-color 0.45s ease-in-out;
+    }
+    .Hyper-Link-to-content-1:hover {
+      cursor: context-menu;
+      background-color: #06adc7;
+    }
+
+    .Hyper-Link-Button-1 {
+      position: absolute;
+      border-radius: 30cm;
+      left: 37.7vw;
+      top: 2.75vh;
+      height: auto;
+      width: 170px;
+      z-index: 9;
+      transition: background-color 0.45s ease-in-out;
+    }
+    .Hyper-Link-Button-1:hover {
+      cursor: pointer;
+      background-color: lightgray;
     }
   </style>
   <div>
-    <canvas class="index-body-main" id="index-body-main"></canvas>
+<!--First content Frame-->
+  <body-frame-lower class="body-canvas-frame-1" id="body-canvas-frame-1">
+    <div>
+      <iframe class="Preview-iframe-1" id="Preview-iframe-1" src="file:///media/fuse/drivefs-ce0ee3a02cf9d36cdb35790db96ccbc4/root/Node%20HTML%20Container%20(Version%20Folder)/Online%20Content/Content%20Gallery/Preview_Loading.html"></iframe>
+      <canvas class="Hyper-Link-to-content-1" id="Hyper-Link-to-content-1" type="submit"></canvas>
+      <div>
+      <form action="file:///media/fuse/drivefs-ce0ee3a02cf9d36cdb35790db96ccbc4/root/Node%20HTML%20Container%20(Version%20Folder)/Online%20Content/Content%20Gallery/Loading.html" target="_blank" method="get">
+        <button type="submit" class="Hyper-Link-Button-1" id="Hyper-Link-Button-1">Go to link</button>
+      </form>
+      </div>
+    </div>
+  </body-frame-lower>
+<!--Second content Frame-->
+  <body-frame-lower class="body-canvas-frame-2" id="body-canvas-frame-2">
+    <iframe class="Preview-iframe-2" id="Preview-iframe-2" src="../_Read_Me!_.txt"></iframe> <!--https://dimava.github.io/shapez/modZ/-->
+    <canvas class="Hyper-Link-to-content-1" id="Hyper-Link-to-content-1" type="submit"></canvas>
+    <div>
+    <form action="../_Read_Me!_.txt" target="_blank" method="get">
+      <button type="submit" class="Hyper-Link-Button-1" id="Hyper-Link-Button-1">Go to link</button>
+    </form>
+  </div>
+  </body-frame-lower>
+<!--Java Script for loading-->
+  <!--Lazy Loading-->
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+      });
+        });
+          });
+      // Query threshold and variable source
+      const sections = document.querySelectorAll('body-frame-lower');
+      const observerOptions = { //root: null, rootMargin: '0px', threshold: 0.1 }
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+      };
+      
+      const observerCallback = (entries, observer) => { entries.forEach(entry => { 
+          if (entry.isIntersecting) { entry.target.classList.add('loaded'); } 
+          }); }; 
+          const observer = new IntersectionObserver(observerCallback, observerOptions); 
+          sections.forEach(section => { observer.observe(section); }); 
+    </script> 
   </div>
 </html>
