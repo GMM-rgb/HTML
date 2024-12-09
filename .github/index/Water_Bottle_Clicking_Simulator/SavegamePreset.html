@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="game-title">Save Game Preset</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #03a882;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative; /* Added for absolute positioning of upgrade buttons */
+        }
+        .center-image {
+            width: 200px;
+            height: 200px;
+            background-image: url('Water_Bottle_1.jpg'); /* Reference local file */
+            background-image: url('https://assets.onecompiler.app/42w3zjd8h/42yhxcsty/Water_Bottle_1.jpg'); /* Reference Online image */
+            border: 5px solid lightcyan;
+            border-radius: 25px;
+            background-size: cover;
+            background-position: center;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin-bottom: 20px;
+            opacity: 0.785;
+            transition: transform 0.175s ease-in-out, border-radius 0.3s ease-in-out, border 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            mask-clip: 1px;
+        }
+        .center-image.clicked {
+            transform: rotate(15deg) 
+            scale(0.9);
+        }
+        /* Makes the click animation each time passive income is earned */
+        .center-image.initPassiveIncome.game, .center-image.clicked {
+            transform: rotate(15deg)
+            scale(0.9);
+        }
+
+        .center-image:hover {
+            cursor: pointer;
+            border-radius: 40px;
+            border: 5px solid cyan;
+            opacity: 0.65;
+        }
+
+        .game-name {
+            font-size: 36px;
+            font-weight: bold;
+            position: absolute;
+            top: 0.5vh;
+            left: 1.5vw;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .water-bottle-count {
+            position: absolute;
+            justify-content: space-around;
+            justify-content: space-evenly;
+            justify-self: auto;
+            justify-content: baseline;
+            top: 50px;
+            right: center;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 10px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .upgrade-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            position: absolute;
+            bottom: 20px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .right-buttons, .left-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .upgrade-button, .multiplier-button, .super-multiplier-button, .mega-multiplier-button, .passive-income-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #8efae1;
+            cursor: pointer;
+            transition: background-color 0.4s ease-in-out;
+        }
+        .upgrade-button:hover, .multiplier-button:hover, .super-multiplier-button:hover, .mega-multiplier-button:hover, .passive-income-button:hover {
+            background-color: #007358;
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: none;
+            border-radius: 5px;
+            background-color: #8efae1;
+            cursor: pointer;
+            transition: background-color 0.4s ease-in-out;
+            z-index: 100;
+        }
+        .back-button:hover {
+            background-color: #007358;
+        }
+    </style>
+    <script src="PassiveIncome.js"></script>
+    <script>
+        function getGameName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('name') || 'Save Game Preset';
+        }
+
+        function init() {
+            const gameName = getGameName();
+            document.getElementById('game-title').textContent = gameName;
+            document.getElementById('game-name').textContent = gameName;
+
+            const savedGames = JSON.parse(localStorage.getItem("savedGames")) || [];
+            let game = savedGames.find(g => g.name === gameName);
+
+            if (!game) {
+                game = { 
+                    name: gameName, 
+                    count: 0, 
+                    level: 1, 
+                    multiplierLevel: 1, 
+                    superMultiplierLevel: 1,
+                    megaMultiplierLevel: 1,
+                    passiveIncome: { level: 0, rate: 10, cost: 100 }
+                };
+                savedGames.push(game);
+                localStorage.setItem("savedGames", JSON.stringify(savedGames));
+            }
+
+            if (isNaN(game.count)) game.count = 0;
+            if (isNaN(game.level)) game.level = 1;
+            if (isNaN(game.multiplierLevel)) game.multiplierLevel = 1;
+            if (isNaN(game.superMultiplierLevel)) game.superMultiplierLevel = 1;
+            if (isNaN(game.megaMultiplierLevel)) game.megaMultiplierLevel = 1;
+
+            document.getElementById('water-bottle-count').textContent = `Water Bottles: ${game.count}`;
+            updateUpgradeButtons(game);
+
+            const image = document.querySelector('.center-image');
+            image.addEventListener('click', function() {
+                game.count += game.level * game.multiplierLevel * game.superMultiplierLevel * game.megaMultiplierLevel; // Increase by the current level, multiplier, super multiplier, and mega multiplier
+                document.getElementById('water-bottle-count').textContent = `Water Bottles: ${game.count}`;
+                image.classList.add('clicked');
+                setTimeout(function() {
+                    image.classList.remove('clicked');
+                }, 150);
+                saveGame(game);
+            });
+
+            document.getElementById('upgrade-button').addEventListener('click', function() {
+                upgradeClickLevel(game);
+            });
+
+            document.getElementById('multiplier-button').addEventListener('click', function() {
+                upgradeMultiplierLevel(game);
+            });
+
+            document.getElementById('super-multiplier-button').addEventListener('click', function() {
+                upgradeSuperMultiplierLevel(game);
+            });
+
+            document.getElementById('mega-multiplier-button').addEventListener('click', function() {
+                upgradeMegaMultiplierLevel(game);
+            });
+
+            document.getElementById('passive-income-button').addEventListener('click', function() {
+                upgradePassiveIncome(game);
+            });
+
+            // Initialize passive income functionality
+            initPassiveIncome(game);
+        }
+
+        function upgradeClickLevel(game) {
+            const upgradeCost = 50 * Math.pow(2, game.level - 1);
+            if (game.count >= upgradeCost) {
+                game.count -= upgradeCost;
+                game.level += 1;
+                document.getElementById('water-bottle-count').textContent = `Water Bottles: ${game.count}`;
+                alert(`Upgraded to level ${game.level}!`);
+                updateUpgradeButtons(game);
+                saveGame(game);
+            } else {
+                alert(`Not enough water bottles! You need ${upgradeCost} water bottles to upgrade.`);
+            }
+        }
+
+        function upgradeMultiplierLevel(game) {
+            const multiplierCost = 50 * Math.pow(2, game.multiplierLevel - 1);
+            if (game.count >= multiplierCost) {
+                game.count -= multiplierCost;
+                game.multiplierLevel += 1;
+                document.getElementById('water-bottle-count').textContent = `Water Bottles: ${game.count}`;
+                alert(`Multiplier upgraded to ${game.multiplierLevel}!`);
+                updateUpgradeButtons(game);
+                saveGame(game);
+            } else {
+                alert(`Not enough water bottles! You need ${multiplierCost} water bottles to upgrade.`);
+            }
+        }
+
+        function upgradeSuperMultiplierLevel(game) {
+            const superMultiplierCost = 800 * Math.pow(2, game.superMultiplierLevel - 1);
+            if (game.count >= superMultiplierCost) {
+                game.count -= superMultiplierCost;
+                game.superMultiplierLevel += 1;
+                document.getElementById('water-bottle-count').textContent = `Water Bottles: ${game.count}`;
+                alert(`Super Multiplier upgraded to ${game.superMultiplierLevel}!`);
+                updateUpgradeButtons(game);
+                saveGame(game);
+            } else {
+                alert(`Not enough water bottles! You need ${superMultiplierCost} water bottles to upgrade.`);
+            }
+        }
+
+        function upgradeMegaMultiplierLevel(game) {
+            const megaMultiplierCost = 1000 * Math.pow(2, game.megaMultiplierLevel - 1);
+            if (game.count >= megaMultiplierCost) {
+                game.count -= megaMultiplierCost;
+                game.megaMultiplierLevel += 1;
+                document.getElementById('water-bottle-count').textContent = `Water Bottles: ${game.count}`;
+                alert(`Mega Multiplier upgraded to ${game.megaMultiplierLevel}!`);
+                updateUpgradeButtons(game);
+                saveGame(game);
+            } else {
+                alert(`Not enough water bottles! You need ${megaMultiplierCost} water bottles to upgrade.`);
+            }
+        }
+
+        function updateUpgradeButtons(game) {
+            const upgradeCost = 50 * Math.pow(2, game.level - 1);
+            document.getElementById('upgrade-button').textContent = `Upgrade (${upgradeCost} bottles)`;
+
+            const multiplierCost = 50 * Math.pow(2, game.multiplierLevel - 1);
+            document.getElementById('multiplier-button').textContent = `Multiplier (${multiplierCost} bottles)`;
+
+            const superMultiplierCost = 800 * Math.pow(2, game.superMultiplierLevel - 1);
+            document.getElementById('super-multiplier-button').textContent = `Super Multiplier (${superMultiplierCost} bottles)`;
+
+            const megaMultiplierCost = 1000 * Math.pow(2, game.megaMultiplierLevel - 1);
+            document.getElementById('mega-multiplier-button').textContent = `Mega Multiplier (${megaMultiplierCost} bottles)`;
+
+            const passiveIncomeData = game.passiveIncome || { cost: 100 };
+            document.getElementById('passive-income-button').textContent = `Upgrade Passive Income (${passiveIncomeData.cost} bottles)`;
+    }
+
+    function saveGame(updatedGame) {
+        let savedGames = JSON.parse(localStorage.getItem("savedGames")) || [];
+        const gameIndex = savedGames.findIndex(g => g.name === updatedGame.name);
+        if (gameIndex !== -1) {
+            savedGames[gameIndex] = updatedGame;
+        } else {
+            savedGames.push(updatedGame);
+        }
+        localStorage.setItem("savedGames", JSON.stringify(savedGames));
+    }
+
+    </script>
+</head>
+<body onload="init()">
+    <div id="water-bottle-count" class="water-bottle-count"></div>
+    <div class="center-image" oncontextmenu="return false;">
+        <script>
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+            }, false);
+        </script>
+    </div>
+    <div id="game-name" class="game-name"></div>
+    <div class="upgrade-buttons">
+        <div class="left-buttons">
+            <button class="passive-income-button" id="passive-income-button">Upgrade Passive Income</button>
+        </div>
+        <div class="right-buttons">
+            <button class="upgrade-button" id="upgrade-button">Upgrade</button>
+            <button class="multiplier-button" id="multiplier-button">Multiplier</button>
+            <button class="super-multiplier-button" id="super-multiplier-button">Super Multiplier</button>
+            <button class="mega-multiplier-button" id="mega-multiplier-button">Mega Multiplier</button>
+        </div>
+    </div>
+    <button class="back-button" onclick="window.location.href='Water_Bottle_Clicking_Simulator.html'">Back to Menu</button>
+</body>
+<style>
+    .Created-by {
+        position: fixed;
+        bottom: 10px;
+        left: 1vw;
+        z-index: 10;
+        font-weight: bold;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+</style>
+    <div>
+        <footer class="Created-by" id="Created-by">Coded by Maximus F.</footer>
+    </div>
+</html>

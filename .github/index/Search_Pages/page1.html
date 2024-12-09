@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Board Customization</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Board Customization</h1>
+    <label for="colorInput">Choose Canvas Color: </label>
+    <input type="color" id="colorInput" name="colorInput" value="#00ff00">
+    <br>
+    <label for="textInput">Enter Text: </label>
+    <input type="text" id="textInput" name="textInput" placeholder="Enter your text">
+    <button onclick="updateCanvas()">Update Canvas</button>
+    <canvas id="myCanvas" width="500" height="300"></canvas>
+
+    <script>
+        function updateCanvas() {
+            const canvas = document.getElementById('myCanvas');
+            const context = canvas.getContext('2d');
+            const color = document.getElementById('colorInput').value;
+            const text = document.getElementById('textInput').value;
+
+            // Clear the canvas
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Set the background color
+            context.fillStyle = color;
+            context.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Set the text properties and draw the text
+            context.fillStyle = '#000'; // Text color
+            context.font = '30px Arial';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.fillText(text, canvas.width / 2, canvas.height / 2);
+        }
+
+        // Initialize the canvas with the default color
+        updateCanvas();
+    </script>
+</body>
+</html>
