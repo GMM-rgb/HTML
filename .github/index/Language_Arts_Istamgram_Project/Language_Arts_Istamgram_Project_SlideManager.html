@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      head {
+        align-items: left;
+        text-align: left;
+        position: absolute;
+      }
+      
+      body {
+        background-color: darkcyan;
+      }
+    </style>
+</html>
+<!--Create Frame UI to put text in-->
+<!DOCTYPE>
+<html lang="en">
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <body>
+    <head>
+      <style>
+    body1 {
+              display: flex;
+              position: fixed;
+              margin: 0;
+              height: 5px;
+              top: 10vh;
+              background-color: white;
+        }
+        canvas[id="CanvasTerminal1"] {
+            border: none;
+            position: fixed;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            background-color: #f7b945;
+            border-radius: 20px;
+        }
+    </style>
+      </head>
+     <canvas id="CanvasTerminal1" width="1200" height="850"></canvas>
+     <canvas-color id="CanvasTerminal1"></canvas-color>
+  </html>
+      <!--Create secondary Frame for Profile-->
+    <html>
+  <body>
+    <head>
+      <style>
+    body2 {
+      display: flex;
+      position: fixed;
+      height: 5px;
+      top: 10vh;
+      left: 10vh;
+      padding: 20px;
+      background-color: #6aba7f;
+    }
+          canvas[id="CanvasTerminal2"] {
+            border: none;
+            position: fixed;
+            background-color: #44f272;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+          }
+    </style>
+  </head>
+     <canvas id="CanvasTerminal2" width="785" height="850"></canvas>
+     <canvas-color id="CanvasTerminal2"></canvas-color>
+  </html>
+
+<!--Text inside canvas-->
+<html>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <h2><pre>This is the HTML version of the Instagram project for LA!</pre></h2>
+    <h3><pre>I would think this could be a cool idea to do since it would represent a website,<p>however in a WIP state.</p></pre></h3>
+  </head>
+<style>
+    body.position-area[id="CanvasTerminal1"] {
+      display: flex;
+      margin: 15px;
+      align-items: absolute;
+      padding: 10px;
+    }
+    h2 {
+        display: flex;
+        position: absolute;
+        padding: 10px;
+        left: 3vh;
+        top: 15vh;
+        font-size: 15px;
+        color: darkcyan;
+        font: Arial;
+        
+    }
+    
+    h3 {
+      display: flex;
+      position: absolute;
+      padding: 10px;
+      left: 3vh;
+      top: 20vh;
+      font-size: 15px;
+      color: darkcyan;
+      font: Arial;
+    }
+  </style>
+</html>
+
+  <head>
+    <title>Slide Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .top-left[id="top-left0"] {
+            position: absolute;
+            top: 78.5px;
+            left: 30px;
+        }
+
+        .Slide1-button {
+            display: flex;
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size:1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden; /* Ensures the splash stays within the button */
+            position: fixed;
+            position: relative;
+            display: inline-block; /* Ensures proper positioning */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .Slide1-button:hover {
+            background-color: darkred;
+        }
+
+        .splash {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            transform: scale(0);
+            animation: splash-animation 0.6s ease-in-out;
+            width: 0;
+            height: 0;
+        }
+
+        @keyframes splash-animation {
+            from {
+                transform: scale(0);
+                opacity: 1;
+            }
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left0">
+        <a href="Slide1.html" class="Slide1-button" onclick="createSplash(event)">Slide #1</a>
+    </div>
+
+    <script src="JS_Scripts/ButtonSplashEffect1.js"></script>
+  </body>
+</html>
+<!--Button to second slide-->
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .top-left[id="top-left1"] {
+            position: absolute;
+            top: 78.5px;
+            left: 60px;
+        }
+
+        .Slide2-button {
+            display: flex;
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size:1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden; /* Ensures the splash stays within the button */
+            position: relative;
+            position: absolute, fixed;
+            display: inline-block; /* Ensures proper positioning */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .Slide2-button:hover {
+            background-color: darkred;
+        }
+
+        .splash {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            transform: scale(0);
+            animation: splash-animation 0.6s ease-in-out;
+            width: 0;
+            height: 0;
+        }
+
+        @keyframes splash-animation {
+            from {
+                transform: scale(0);
+                opacity: 1;
+            }
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-left1">
+        <a href="Slide2.html" class="Slide2-button" onclick="createSplash(event)">Slide #2</a>
+    </div>
+
+    <script src="JS_Scripts/ButtonSplashEffect1.js"></script>
+  </body>
+</html>
+<!--Page Title Creation-->
+<html>
+  <head>
+    <body>
+      <title>Language Arts Instamgram Project</title>
+    <body>
+      <!--Style for the Title & changing when cursor hovers over Title-->
+        <style>
+          h1 {
+            display: flex;
+            display: text;
+            position: fixed;
+            top: 0vh;
+            left: 21vh;
+            padding-left: 20px;
+            display: inline-block;
+            font-size: 2.5em;
+            font-family: Sans-Serif;
+            text-decoration: none;
+            border: 1px solid white;
+            border: hidden;
+            color: black;
+            transition: color 1s ease-in-out, border 0.75s ease-in-out;
+          }
+          
+          h1:hover {
+            cursor:pointer;
+            color: white;
+            display: inline-block;
+            font-weight: bold;
+            text-decoration: underline;
+            border: 5px solid cyan;
+          }
+        </style>
+          <h1>Language Arts Instagram Project</h1>
+      </body>
+    </body>
+  </head>
+</html>
