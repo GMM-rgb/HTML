@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="shortcut icon" type="x-icon" href="../Image_Assets/Tab_Icons/HtWebz_More_Info_Icon_Dark_Mode.png">
+    <head>
+    <title>More Info Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: rgb(112, 255, 236);
+            margin-top: 0;
+            margin-left: 10px;
+            margin-top: 4px;
+            overflow-x: auto;
+        }
+        .info-container-1 {
+            position: absolute;
+            overflow: hidden;
+            background-color: aqua;
+            border: 2px solid black;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            padding: 10px;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            height: 65%;
+            width: 35%;
+            scroll-padding: 0px;
+        }
+        .info-container-1:hover, .info-container-1:active, .info-container-1:focus {
+            overflow-y: scroll;
+        }
+        #info-container-1::-webkit-scrollbar {
+            width: 8px;
+        }
+        #info-container-1::-webkit-scrollbar-track {
+            background: cyan;
+            border: 1px solid black;
+            border-radius: 15px;
+        }
+        #info-container-1::-webkit-scrollbar-thumb {
+            cursor: ns-resize;
+            background-color: darkcyan;
+            border: 1px solid black;
+            border-radius: 15px;
+        }
+        #info-container-1::-webkit-scrollbar-thumb:hover {
+            background: rgb(0, 209, 209);
+        }
+        .info-header-1 {
+            cursor: default;
+            position: relative;
+            margin-left: 0px auto;
+            font-size: 1.65em;
+            font-weight: bold;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+            color: darkcyan;
+            -webkit-text-fill-color: cyan;
+            -webkit-text-stroke: 2px darkcyan;
+        }
+        .text-line-1 {
+            cursor: default;
+            -webkit-user-select: text;
+            user-select: text;
+            font-size: 0.85em;
+            font-weight: normal;
+            text-wrap: pretty;
+            color: black;
+            -webkit-text-fill-color: black;
+            -webkit-text-stroke: 0;
+        }
+        .link-container-1 {
+            position: relative;
+            background-color: bisque;
+            border: 1px solid black;
+            border-top-left-radius: 0.5cm;
+            border-top-right-radius: 0.5cm;
+            border-bottom-left-radius: 0.25cm;
+            border-bottom-right-radius: 0.25cm;
+            padding: 10px;
+            height: 500px;
+        }
+        .link-info {
+            position: relative;
+            border: 1px solid black;
+            border-radius: 17.5px;
+            width: 100%;
+            height: 150px;
+        }
+        .go-back-to-homepage-button {
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+            height: 25px;
+            width: auto;
+            font-weight: bold;
+            font-size: 0.5em;
+            color: black;
+            -webkit-text-fill-color: black;
+            -webkit-text-stroke: 0;
+            -webkit-transition: background-color 0.4s ease-in-out;
+            -webkit-user-select: none;
+            border: 2px solid black;
+            border-radius: 20px;
+            background-color: rgb(106, 106, 248);
+            transition: background-color 0.4s ease-in-out;
+        }
+        #go-back-to-homepage-button:hover {
+            background-color: rgb(83, 83, 253);
+        }
+        .link-list-container {
+            position: relative;
+            padding-top: 10px;
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-bottom: 10px;
+            border: 1px solid black;
+            border-top-left-radius: 0.375cm;
+            border-top-right-radius: 0.375cm;
+            border-bottom-left-radius: 0.5cm;
+            border-bottom-right-radius: 0.5cm;
+        }
+        .divider-0 {
+            position: relative;
+            border-width: 0.5px rgb(0, 0, 0);
+        }
+        .about-home-page-link {
+            cursor: pointer;
+            position: relative;
+            background-color: rgb(106, 106, 248);
+            border: 2px solid black;
+            border-radius: 0.5cm;
+            font-weight: bold;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-transition: background-color 0.4s ease-in-out;
+            transition: background-color 0.4s ease-in-out;
+        }
+        .about-home-page-link:hover {
+            background-color: rgb(83, 83, 253);
+        }
+        .about-home-page-link-label {
+            cursor: default;
+            position: relative;
+            font-weight: bold;
+            font-size: 1.15em;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            text-wrap: stable;
+            color: black;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-text-fill-color: cyan;
+            -webkit-text-stroke: 1px darkcyan;
+        }
+        .divider-1 {
+            position: relative;
+            border-width: 0.5px rgb(0, 0, 0);
+        }
+        .about-content-gallery-link {
+            cursor: pointer;
+            position: relative;
+            background-color: rgb(106, 106, 248);
+            border: 2px solid black;
+            border-radius: 0.5cm;
+            font-weight: bold;
+            -webkit-transition: background-color 0.4s ease-in-out;
+            transition: background-color 0.4s ease-in-out;
+        }
+        .about-content-gallery-link:hover {
+            background-color: rgb(83, 83, 253);
+        }
+        .about-content-gallery-link-label {
+            cursor: default;
+            position: relative;
+            font-weight: bold;
+            font-size: 1.15em;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            text-wrap: stable;
+            color: black;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-text-fill-color: cyan;
+            -webkit-text-stroke: 1px darkcyan;
+        }
+        .divider-2 {
+            position: relative;
+            border-width: 0.5px rgb(0, 0, 0);
+        }
+    </style>
+    <div class="info-container-1" id="info-container-1" onmouseover="this.style.overflowY='scroll'" onmouseout="this.style.overflow='hidden'">
+        <text class="info-header-1" id="info-header-1">Welcome to More Info Page!
+        <form action="../index.html" method="get">
+            <button class="go-back-to-homepage-button" id="go-back-to-homepage-button">Return to Homepage</button>
+        </form>
+        <p class="text-line-1" id="text-line-1">The More Info Page is where you can find extended detail from many things. For example, more context on something to explain or is longer on the explination topic.</p>
+    </text>
+    <div class="link-container-1" id="link-container-1">
+        <iframe class="link-info" src="link_info_iframe.html"></iframe>
+    <div class="link-list-container" id="link-list-container">
+        <hr class="divider-0" id="divider-0">
+        <form action="" method="get" target="_blank">
+            <button class="about-home-page-link" id="link-1">Read More</button>
+            <text class="about-home-page-link-label">About HtWebz Homepage</text>
+        </form>
+        <hr class="divider-1" id="divider-1">
+        <form action="" method="get" target="_blank">
+            <button class="about-content-gallery-link" id="link-2">Read More</button>
+            <text class="about-content-gallery-link-label">About Content Gallery</text>
+        </form>
+        <hr class="divider-2" id="divider-2">
+    </div>
+    </div>
+    </head>
+</html>
